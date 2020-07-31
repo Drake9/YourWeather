@@ -1,5 +1,6 @@
 package Weather;
 
+import Weather.controller.services.OpenWeatherMapService;
 import Weather.view.ViewFactory;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -21,5 +22,8 @@ public class App extends Application {
 
         ViewFactory viewFactory = new ViewFactory();
         viewFactory.showMainWindow();
+
+        OpenWeatherMapService weatherMapService = new OpenWeatherMapService("Poland","Cracow");
+        weatherMapService.start();
     }
 }
