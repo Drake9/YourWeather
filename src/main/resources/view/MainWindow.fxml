@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="710.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="27.0" layoutY="27.0" prefHeight="20.0" prefWidth="90.0" text="Your country:" />
+      <Label layoutX="27.0" layoutY="64.0" prefHeight="20.0" prefWidth="90.0" text="Your city:" />
+      <Label layoutX="312.0" layoutY="27.0" prefHeight="20.0" prefWidth="90.0" text="Holiday country:" />
+      <Label layoutX="312.0" layoutY="64.0" prefHeight="20.0" prefWidth="90.0" text="Holiday city:" />
+      <TextField fx:id="userCountry" layoutX="118.0" layoutY="24.0" prefHeight="26.0" prefWidth="180.0" />
+      <TextField fx:id="userCity" layoutX="118.0" layoutY="61.0" prefHeight="26.0" prefWidth="180.0" />
+      <TextField fx:id="holidayCountry" layoutX="402.0" layoutY="24.0" prefHeight="26.0" prefWidth="180.0" />
+      <TextField fx:id="holidayCity" layoutX="402.0" layoutY="61.0" prefHeight="26.0" prefWidth="180.0" />
+      <ImageView fx:id="userWeather1" fitHeight="100.0" fitWidth="100.0" layoutX="27.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="userWeather2" fitHeight="100.0" fitWidth="100.0" layoutX="27.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="userWeather3" fitHeight="100.0" fitWidth="100.0" layoutX="27.0" layoutY="332.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="userWeather4" fitHeight="100.0" fitWidth="100.0" layoutX="27.0" layoutY="487.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="userWeather5" fitHeight="100.0" fitWidth="100.0" layoutX="22.0" layoutY="587.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
