@@ -1,6 +1,8 @@
 package Weather;
 
+import Weather.controller.WeatherServiceResult;
 import Weather.controller.services.OpenWeatherMapService;
+import Weather.model.WeatherCondition;
 import Weather.view.ViewFactory;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -13,6 +15,8 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
+    private WeatherDataManager weatherDataManager = new WeatherDataManager();
+
     public static void main(String[] args) {
         launch();
     }
@@ -20,10 +24,25 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
 
-        ViewFactory viewFactory = new ViewFactory();
-        viewFactory.showMainWindow();
+        ViewFactory viewFactory = new ViewFactory(weatherDataManager);
 
-        OpenWeatherMapService weatherMapService = new OpenWeatherMapService("Poland","Cracow");
-        weatherMapService.start();
+        OpenWeatherMapService weatherService = new OpenWeatherMapService(weatherDataManager);
+        weatherService.start();
+
+
+        weatherService.setOnSucceeded(event -> {
+
+            WeatherServiceResult weatherServiceResult = weatherService.getValue();
+
+            switch (weatherServiceResult) {
+                case SUCCESS:
+                    viewFactory.showMainWindow();
+                    break;
+                default:
+                    System.out.println("unexpected failure");
+                    break;
+            }
+
+        });
     }
 }
