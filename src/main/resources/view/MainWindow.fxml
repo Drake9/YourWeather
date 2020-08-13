@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="710.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="27.0" layoutY="27.0" prefHeight="20.0" prefWidth="90.0" text="Your country:" />
       <Label layoutX="27.0" layoutY="64.0" prefHeight="20.0" prefWidth="90.0" text="Your city:" />
@@ -16,60 +17,119 @@
       <TextField fx:id="userCity" layoutX="118.0" layoutY="61.0" prefHeight="26.0" prefWidth="180.0" />
       <TextField fx:id="holidayCountry" layoutX="402.0" layoutY="24.0" prefHeight="26.0" prefWidth="180.0" />
       <TextField fx:id="holidayCity" layoutX="402.0" layoutY="61.0" prefHeight="26.0" prefWidth="180.0" />
-      <ImageView fx:id="weatherImage1" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="weatherImage11" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/sun.png" />
          </image></ImageView>
-      <ImageView fx:id="weatherImage2" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="weatherImage12" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="206.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/sun.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="weatherImage3" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="weatherImage13" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="291.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/sun.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="weatherImage4" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="362.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="weatherImage14" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/sun.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="weatherImage5" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="447.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="weatherImage15" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/sun.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="weatherImage6" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="532.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="weatherImage16" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="546.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/sun.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="weatherImage7" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="617.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="weatherImage17" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="631.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/sun.png" />
          </image>
       </ImageView>
-      <Label fx:id="day1" layoutX="118.0" layoutY="115.0" prefHeight="20.0" prefWidth="180.0" />
-      <Label fx:id="temperature1" layoutX="118.0" layoutY="135.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="weather1" layoutX="118.0" layoutY="155.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="day2" layoutX="118.0" layoutY="200.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="temperature2" layoutX="118.0" layoutY="220.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="weather2" layoutX="118.0" layoutY="240.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="day3" layoutX="118.0" layoutY="284.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="temperature3" layoutX="118.0" layoutY="304.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="weather3" layoutX="118.0" layoutY="324.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="day4" layoutX="118.0" layoutY="370.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="temperature4" layoutX="118.0" layoutY="390.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="weather4" layoutX="118.0" layoutY="410.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="day5" layoutX="118.0" layoutY="455.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="temperature5" layoutX="118.0" layoutY="475.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="weather5" layoutX="118.0" layoutY="495.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="day6" layoutX="118.0" layoutY="540.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="temperature6" layoutX="118.0" layoutY="560.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="weather6" layoutX="118.0" layoutY="580.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="day7" layoutX="118.0" layoutY="625.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="temperature7" layoutX="118.0" layoutY="645.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
-      <Label fx:id="weather7" layoutX="118.0" layoutY="665.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day11" layoutX="118.0" layoutY="129.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature11" layoutX="118.0" layoutY="149.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather11" layoutX="118.0" layoutY="169.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day12" layoutX="118.0" layoutY="214.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature12" layoutX="118.0" layoutY="234.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather12" layoutX="118.0" layoutY="254.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day13" layoutX="118.0" layoutY="298.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature13" layoutX="118.0" layoutY="318.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather13" layoutX="118.0" layoutY="338.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day14" layoutX="118.0" layoutY="384.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature14" layoutX="118.0" layoutY="404.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather14" layoutX="118.0" layoutY="424.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day15" layoutX="118.0" layoutY="469.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature15" layoutX="118.0" layoutY="489.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather15" layoutX="118.0" layoutY="509.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day16" layoutX="118.0" layoutY="554.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature16" layoutX="118.0" layoutY="574.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather16" layoutX="118.0" layoutY="594.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day17" layoutX="118.0" layoutY="639.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature17" layoutX="118.0" layoutY="659.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather17" layoutX="118.0" layoutY="679.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="errorLabel1" layoutX="27.0" layoutY="101.0" prefHeight="20.0" prefWidth="225.0" />
+      <Button layoutX="242.0" layoutY="98.0" mnemonicParsing="false" onAction="#refreshWeatherDataButtonAction" prefHeight="20.0" prefWidth="56.0" text="Refresh" />
+      <Label fx:id="errorLabel2" layoutX="357.0" layoutY="101.0" prefHeight="20.0" prefWidth="225.0" />
+      <ImageView fx:id="weatherImage21" fitHeight="75.0" fitWidth="75.0" layoutX="312.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/sun.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="weatherImage22" fitHeight="75.0" fitWidth="75.0" layoutX="312.0" layoutY="206.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/sun.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="weatherImage23" fitHeight="75.0" fitWidth="75.0" layoutX="312.0" layoutY="291.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/sun.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="weatherImage24" fitHeight="75.0" fitWidth="75.0" layoutX="312.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/sun.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="weatherImage25" fitHeight="75.0" fitWidth="75.0" layoutX="312.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/sun.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="weatherImage26" fitHeight="75.0" fitWidth="75.0" layoutX="312.0" layoutY="546.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/sun.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="weatherImage27" fitHeight="75.0" fitWidth="75.0" layoutX="312.0" layoutY="631.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/sun.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="day21" layoutX="403.0" layoutY="129.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature21" layoutX="403.0" layoutY="149.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather21" layoutX="403.0" layoutY="169.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day22" layoutX="403.0" layoutY="214.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature22" layoutX="403.0" layoutY="234.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather22" layoutX="403.0" layoutY="254.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day23" layoutX="403.0" layoutY="298.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature23" layoutX="403.0" layoutY="318.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather23" layoutX="403.0" layoutY="338.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day24" layoutX="403.0" layoutY="384.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature24" layoutX="403.0" layoutY="404.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather24" layoutX="403.0" layoutY="424.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day25" layoutX="403.0" layoutY="469.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature25" layoutX="403.0" layoutY="489.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather25" layoutX="403.0" layoutY="509.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day26" layoutX="403.0" layoutY="554.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature26" layoutX="403.0" layoutY="574.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather26" layoutX="403.0" layoutY="594.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="day27" layoutX="403.0" layoutY="639.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="temperature27" layoutX="403.0" layoutY="659.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label fx:id="weather27" layoutX="403.0" layoutY="679.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
    </children>
 </AnchorPane>
