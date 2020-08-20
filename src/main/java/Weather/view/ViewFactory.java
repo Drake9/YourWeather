@@ -22,11 +22,11 @@ public class ViewFactory {
         MainWindowController controller = new MainWindowController(weatherDataManager,this, "/view/MainWindow.fxml");
         initializeStage(controller);
 
+        controller.clearView();
         if(placesAreSet) {
             controller.loadWeatherData();
-        }else{
-            controller.clearView();
         }
+
     }
 
     private void initializeStage(BaseController controller){

@@ -22,33 +22,6 @@ public class App extends Application {
         launch();
     }
 
-    /*
-    @Override
-    public void start(Stage stage) {
-
-        ViewFactory viewFactory = new ViewFactory(weatherDataManager);
-
-        OpenWeatherMapService weatherService = new OpenWeatherMapService(weatherDataManager);
-        weatherService.start();
-
-
-        weatherService.setOnSucceeded(event -> {
-
-            WeatherServiceResult weatherServiceResult = weatherService.getValue();
-
-            switch (weatherServiceResult) {
-                case SUCCESS:
-                    viewFactory.showMainWindow();
-                    break;
-                default:
-                    System.out.println("unexpected failure");
-                    break;
-            }
-
-        });
-    }
-    */
-
     @Override
     public void start(Stage stage) throws Exception {
 

@@ -22,16 +22,16 @@ public class MainWindowController extends BaseController implements Initializabl
     IconResolver iconResolver = new IconResolver();
 
     @FXML
-    private TextField userCountry;
+    private TextField countryName1;
 
     @FXML
-    private TextField userCity;
+    private TextField cityName1;
 
     @FXML
-    private TextField holidayCountry;
+    private TextField countryName2;
 
     @FXML
-    private TextField holidayCity;
+    private TextField cityName2;
 
     @FXML
     private ImageView weatherImage11;
@@ -214,76 +214,22 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //...
-    }
 
-    public void loadWeatherData(){
-        loadUserWeatherData();
-        loadHolidayWeatherData();
-    }
-
-    public void loadUserWeatherData(){
-
-        OpenWeatherMapService weatherService = new OpenWeatherMapService(weatherDataManager.getWeatherForecast(0));
-        weatherService.start();
-
-        weatherService.setOnSucceeded(event -> {
-
-            WeatherServiceResult weatherServiceResult = weatherService.getValue();
-
-            switch (weatherServiceResult) {
-                case SUCCESS:
-                    showUserWeatherData();
-                    break;
-                default:
-                    errorLabel1.setText("Error.");
-                    System.out.println("unexpected failure");
-                    break;
-            }
-
-        });
-    }
-
-    private void showUserWeatherData() {
-        String iconLocation = "";
-        try {
-            userCountry.setText(weatherDataManager.getCountry(0));
-            userCity.setText(weatherDataManager.getCity(0));
-
-            Scene scene = day11.getScene();
-            for (int i = 1; i <= 7; i++) {
-                ImageView imageView = (ImageView) scene.lookup("#weatherImage1" + i);
-                iconLocation = iconResolver.getIconForWeather(weatherDataManager.getWeatherForDay(0,i-1));
-                imageView.setImage(new Image(new FileInputStream(iconLocation)));
-
-                Label label = (Label) scene.lookup("#day1" + i);
-                label.setText(weatherDataManager.getWeatherCondition(0,i-1).getDateAsString());
-                label = (Label) scene.lookup("#temperature1" + i);
-                label.setText(weatherDataManager.getWeatherCondition(0, i-1).getTemperature() + "\u00B0"+"C");
-                label = (Label) scene.lookup("#weather1" + i);
-                label.setText(weatherDataManager.getWeatherCondition(0,i-1).getWeatherDescription());
-            }
-
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        countryName1.setText(weatherDataManager.getCountry(0));
+        countryName2.setText(weatherDataManager.getCountry(1));
+        cityName1.setText(weatherDataManager.getCity(0));
+        cityName2.setText(weatherDataManager.getCity(1));
     }
 
     @FXML
     void refreshWeatherDataButtonAction() {
 
-        if(checkUserWeatherData()){
-            loadUserWeatherData();
-        }
-
-        if(checkHolidayWeatherData()){
-            loadHolidayWeatherData();
-        }
+        loadWeatherData();
     }
 
     private boolean checkUserWeatherData(){
-        String country = userCountry.getText();
-        String city = userCity.getText();
+        String country = countryName1.getText();
+        String city = cityName1.getText();
 
         if(country.equals("") && city.equals("")){
             errorLabel1.setText("Type in your country and city.");
@@ -303,8 +249,8 @@ public class MainWindowController extends BaseController implements Initializabl
     }
 
     private boolean checkHolidayWeatherData(){
-        String country = holidayCountry.getText();
-        String city = holidayCity.getText();
+        String country = countryName2.getText();
+        String city = cityName2.getText();
 
         if(country.equals("") && city.equals("")){
             errorLabel2.setText("Type in your country and city.");
@@ -323,9 +269,23 @@ public class MainWindowController extends BaseController implements Initializabl
         }
     }
 
-    private void loadHolidayWeatherData(){
+    public void loadWeatherData(){
+        if(checkUserWeatherData()){
+            loadColumnWeatherData(1);
+        }
 
-        OpenWeatherMapService weatherService = new OpenWeatherMapService(weatherDataManager.getWeatherForecast(1));
+        if(checkHolidayWeatherData()){
+            loadColumnWeatherData(2);
+        }
+    }
+
+    // left (user) column: 1 ||||| right (holiday) column: 2
+    private void loadColumnWeatherData(int columnNumber){
+
+        Scene scene = day11.getScene();
+        Label label = (Label) scene.lookup("#errorLabel" + columnNumber);
+        OpenWeatherMapService weatherService =
+                new OpenWeatherMapService(weatherDataManager.getWeatherForecast(columnNumber - 1));
         weatherService.start();
 
         weatherService.setOnSucceeded(event -> {
@@ -334,35 +294,47 @@ public class MainWindowController extends BaseController implements Initializabl
 
             switch (weatherServiceResult) {
                 case SUCCESS:
-                    showHolidayWeatherData();
+                    showColumnWeatherData(columnNumber);
+                    break;
+                case FAILED_BY_DATA:
+                    label.setText("Incorrect data.");
+                    break;
+                case FAILED_BY_NETWORK:
+                    label.setText("Network error.");
                     break;
                 default:
-                    errorLabel2.setText("Error.");
-                    System.out.println("unexpected failure");
+                    label.setText("Failed by unexpected error.");
                     break;
             }
 
         });
     }
 
-    private void showHolidayWeatherData() {
-        String iconLocation = "";
-        try {
-            holidayCountry.setText(weatherDataManager.getCountry(1));
-            holidayCity.setText(weatherDataManager.getCity(1));
+    // left (user) column: 1 |||| right (holiday) column: 2
 
-            Scene scene = day11.getScene();
+    private void showColumnWeatherData(int columnNumber){
+
+        String iconLocation = "";
+        Scene scene = day11.getScene();
+        try {
+            TextField country = (TextField) scene.lookup("#countryName" + columnNumber);
+            country.setText(weatherDataManager.getCountry(columnNumber - 1));
+            TextField city = (TextField) scene.lookup("#cityName" + columnNumber);
+            city.setText(weatherDataManager.getCity(columnNumber - 1));
+
             for (int i = 1; i <= 7; i++) {
-                ImageView imageView = (ImageView) scene.lookup("#weatherImage2" + i);
-                iconLocation = iconResolver.getIconForWeather(weatherDataManager.getWeatherForDay(1,i-1));
+                ImageView imageView = (ImageView) scene.lookup("#weatherImage"+ columnNumber + i);
+                iconLocation = iconResolver.getIconForWeather(weatherDataManager.getWeatherForDay(columnNumber - 1,
+                        i-1));
                 imageView.setImage(new Image(new FileInputStream(iconLocation)));
 
-                Label label = (Label) scene.lookup("#day2" + i);
-                label.setText(weatherDataManager.getWeatherCondition(1,i-1).getDateAsString());
-                label = (Label) scene.lookup("#temperature2" + i);
-                label.setText(weatherDataManager.getWeatherCondition(1, i-1).getTemperature() + "\u00B0"+"C");
-                label = (Label) scene.lookup("#weather2" + i);
-                label.setText(weatherDataManager.getWeatherCondition(1,i-1).getWeatherDescription());
+                Label label = (Label) scene.lookup("#day" + columnNumber + i);
+                label.setText(weatherDataManager.getWeatherCondition(columnNumber - 1,i-1).getDateAsString());
+                label = (Label) scene.lookup("#temperature" + columnNumber + i);
+                label.setText(weatherDataManager.getWeatherCondition(columnNumber - 1, i-1).getTemperature() + "\u00B0"+
+                        "C");
+                label = (Label) scene.lookup("#weather" + columnNumber + i);
+                label.setText(weatherDataManager.getWeatherCondition(columnNumber - 1,i-1).getWeatherDescription());
             }
 
         } catch (Exception e){
