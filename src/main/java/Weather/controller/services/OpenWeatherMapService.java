@@ -22,6 +22,7 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
     private WeatherForecast weatherForecast;
     private Double latitude;
     private Double longitude;
+    private Integer responseCode;
 
     public OpenWeatherMapService(WeatherForecast weatherForecast) {
         this.weatherForecast = weatherForecast;
@@ -42,8 +43,18 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 String data = EntityUtils.toString(entity);
-                getCoordinates(data);
-                System.out.println(weatherForecast.getCity()+" "+longitude.toString()+" "+latitude.toString());
+
+                JSONObject json = new JSONObject(data);
+                getResponseCode(json);
+
+                if(responseCode == 404){
+                    return WeatherServiceResult.FAILED_BY_DATA;
+                } else if (responseCode == 200){
+                    getCoordinates(json);
+                    System.out.println(weatherForecast.getCity() + " " + longitude.toString() + " " + latitude.toString());
+                } else {
+                    return WeatherServiceResult.FAILED_BY_UNEXPECTED_ERROR;
+                }
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -96,11 +107,24 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
         };
     }
 
-    private void getCoordinates(String text){
-        JSONObject json = new JSONObject(text);
+    private void getCoordinates(JSONObject json){
+
         JSONObject coordinates= json.getJSONObject("coord");
         this.longitude = (Double) coordinates.get("lon");
         this.latitude = (Double) coordinates.get("lat");
         this.weatherForecast.setCity( (String) json.get("name"));
+    }
+
+    private void getResponseCode(JSONObject json){
+
+        Object object = json.get("cod");
+
+        if(object instanceof String){
+            responseCode = Integer.parseInt((String)object);
+        }else if (object instanceof Integer){
+            responseCode = (Integer) object;
+        } else {
+            responseCode = 909;
+        }
     }
 }

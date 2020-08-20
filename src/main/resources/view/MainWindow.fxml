@@ -13,10 +13,10 @@
       <Label layoutX="27.0" layoutY="64.0" prefHeight="20.0" prefWidth="90.0" text="Your city:" />
       <Label layoutX="312.0" layoutY="27.0" prefHeight="20.0" prefWidth="90.0" text="Holiday country:" />
       <Label layoutX="312.0" layoutY="64.0" prefHeight="20.0" prefWidth="90.0" text="Holiday city:" />
-      <TextField fx:id="userCountry" layoutX="118.0" layoutY="24.0" prefHeight="26.0" prefWidth="180.0" />
-      <TextField fx:id="userCity" layoutX="118.0" layoutY="61.0" prefHeight="26.0" prefWidth="180.0" />
-      <TextField fx:id="holidayCountry" layoutX="402.0" layoutY="24.0" prefHeight="26.0" prefWidth="180.0" />
-      <TextField fx:id="holidayCity" layoutX="402.0" layoutY="61.0" prefHeight="26.0" prefWidth="180.0" />
+      <TextField fx:id="countryName1" layoutX="118.0" layoutY="24.0" prefHeight="26.0" prefWidth="180.0" />
+      <TextField fx:id="cityName1" layoutX="118.0" layoutY="61.0" prefHeight="26.0" prefWidth="180.0" />
+      <TextField fx:id="countryName2" layoutX="402.0" layoutY="24.0" prefHeight="26.0" prefWidth="180.0" />
+      <TextField fx:id="cityName2" layoutX="402.0" layoutY="61.0" prefHeight="26.0" prefWidth="180.0" />
       <ImageView fx:id="weatherImage11" fitHeight="75.0" fitWidth="75.0" layoutX="27.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/sun.png" />
