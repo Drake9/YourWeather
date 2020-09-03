@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class WeatherCondition {
 
@@ -34,7 +35,7 @@ public class WeatherCondition {
     }
 
     public String getDateAsString(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("E dd.MM");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E dd.MM", Locale.ENGLISH);
         return dateFormat.format(date);
     }
 
