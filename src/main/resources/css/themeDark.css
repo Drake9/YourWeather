@@ -1,0 +1,56 @@
+/*Theme base colors:*/
+* {
+    -fx-my-background-color-color: #3a4559;
+    -fx-my-background-color-color-alt: #616c87;
+    -fx-my-font-color: white;
+    -fx-my-font-color-highlighted: white;
+	-fx-my-default-element-color: #353b4a;
+	-fx-my-error-text-fill: #690f0f;
+}
+
+.container{
+    -fx-background-color: -fx-my-background-color-color;
+}
+.errorText{
+    -fx-text-fill: -fx-my-error-text-fill;
+    -fx-font-weight: bold;
+    -fx-font-size: 13pt;
+}
+
+AnchorPane{
+	-fx-background-color: -fx-my-background-color-color;
+}
+
+.big{
+   -fx-font-size: 16pt;
+}
+
+Button, Label, TextField{
+    -fx-text-fill: -fx-my-font-color;
+}
+Button {
+    -fx-background-color: -fx-my-default-element-color;
+	-fx-border-color: white;
+    -fx-border-width: 1 1 1 1;
+	-fx-border-radius: 3, 2, 2;
+}
+Button:hover {
+    -fx-background-color: -fx-my-background-color-color-alt;
+}
+
+.text-field {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, -fx-control-inner-background;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 3, 2, 2;
+    -fx-padding: 0.25em 0.416667em  0.333333em 0.416667em; /* 3 5 4 5 */
+    -fx-prompt-text-fill: derive(-fx-control-inner-background,-30%);
+    -fx-cursor: text;
+    -fx-control-inner-background: -fx-my-default-element-color ;
+}
+
+.text-field:focused {
+    -fx-background-color: -fx-focus-color, -fx-text-box-border, -fx-control-inner-background;
+    -fx-background-insets: -0.4, 1, 2;
+    -fx-background-radius: 3.4, 2, 2;
+    -fx-prompt-text-fill: transparent;
+}

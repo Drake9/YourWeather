@@ -12,6 +12,7 @@ import java.io.IOException;
 public class ViewFactory {
 
     private WeatherDataManager weatherDataManager;
+    private String cssFileName = "/css/themeDark.css";
 
     public ViewFactory(WeatherDataManager weatherDataManager){
         this.weatherDataManager = weatherDataManager;
@@ -46,6 +47,9 @@ public class ViewFactory {
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
         stage.setScene(scene);
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource(cssFileName).toExternalForm());
+
         stage.show();
     }
 

@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="750.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="27.0" layoutY="27.0" prefHeight="20.0" prefWidth="90.0" text="Your country:" />
       <Label layoutX="27.0" layoutY="64.0" prefHeight="20.0" prefWidth="90.0" text="Your city:" />
@@ -73,7 +73,7 @@
       <Label fx:id="temperature17" layoutX="118.0" layoutY="659.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
       <Label fx:id="weather17" layoutX="118.0" layoutY="679.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
       <Label fx:id="errorLabel1" layoutX="27.0" layoutY="101.0" prefHeight="20.0" prefWidth="225.0" />
-      <Button layoutX="242.0" layoutY="98.0" mnemonicParsing="false" onAction="#refreshWeatherDataButtonAction" prefHeight="20.0" prefWidth="56.0" text="Refresh" />
+      <Button layoutX="235.0" layoutY="98.0" mnemonicParsing="false" onAction="#refreshWeatherDataButtonAction" prefHeight="26.0" prefWidth="62.0" text="Refresh" />
       <Label fx:id="errorLabel2" layoutX="357.0" layoutY="101.0" prefHeight="20.0" prefWidth="225.0" />
       <ImageView fx:id="weatherImage21" fitHeight="75.0" fitWidth="75.0" layoutX="312.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -131,5 +131,6 @@
       <Label fx:id="day27" layoutX="403.0" layoutY="639.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
       <Label fx:id="temperature27" layoutX="403.0" layoutY="659.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
       <Label fx:id="weather27" layoutX="403.0" layoutY="679.0" prefHeight="20.0" prefWidth="180.0" text="Label" />
+      <Label layoutX="173.0" layoutY="716.0" prefHeight="20.0" prefWidth="247.0" text="Icons made by Freepik from www.flaticon.com" />
    </children>
 </AnchorPane>

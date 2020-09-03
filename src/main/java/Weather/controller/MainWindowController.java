@@ -227,54 +227,41 @@ public class MainWindowController extends BaseController implements Initializabl
         loadWeatherData();
     }
 
-    private boolean checkUserWeatherData(){
-        String country = countryName1.getText();
-        String city = cityName1.getText();
+    // left (user) column: 1 ||||| right (holiday) column: 2
+    private boolean checkColumnWeatherData(int columnNumber){
+        Scene scene = day11.getScene();
+
+        TextField countryField = (TextField) scene.lookup("#countryName" + columnNumber);
+        String country = countryField.getText();
+
+        TextField cityField = (TextField) scene.lookup("#cityName" + columnNumber);
+        String city = cityField.getText();
+
+        Label errorLabel = (Label) scene.lookup("#errorLabel" + columnNumber);
 
         if(country.equals("") && city.equals("")){
-            errorLabel1.setText("Type in your country and city.");
+            errorLabel.setText("Type in your country and city.");
             return false;
         } else if(country.equals("")){
-            errorLabel1.setText("Type in your country.");
+            errorLabel.setText("Type in your country.");
             return false;
         } else if(city.equals("")){
-            errorLabel1.setText("Type in your city.");
+            errorLabel.setText("Type in your city.");
             return false;
         } else {
-            errorLabel1.setText("");
-            weatherDataManager.setCountry(0, country);
-            weatherDataManager.setCity(0, city);
-            return true;
-        }
-    }
-
-    private boolean checkHolidayWeatherData(){
-        String country = countryName2.getText();
-        String city = cityName2.getText();
-
-        if(country.equals("") && city.equals("")){
-            errorLabel2.setText("Type in your country and city.");
-            return false;
-        } else if(country.equals("")){
-            errorLabel2.setText("Type in your country.");
-            return false;
-        } else if(city.equals("")){
-            errorLabel2.setText("Type in your city.");
-            return false;
-        } else {
-            errorLabel2.setText("");
-            weatherDataManager.setCountry(1, country);
-            weatherDataManager.setCity(1, city);
+            errorLabel.setText("");
+            weatherDataManager.setCountry(columnNumber - 1, country);
+            weatherDataManager.setCity(columnNumber - 1, city);
             return true;
         }
     }
 
     public void loadWeatherData(){
-        if(checkUserWeatherData()){
+        if(checkColumnWeatherData(1)){
             loadColumnWeatherData(1);
         }
 
-        if(checkHolidayWeatherData()){
+        if(checkColumnWeatherData(2)){
             loadColumnWeatherData(2);
         }
     }
