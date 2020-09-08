@@ -310,10 +310,16 @@ public class MainWindowController extends BaseController implements Initializabl
             city.setText(weatherDataManager.getCity(columnNumber - 1));
 
             for (int i = 1; i <= 7; i++) {
-                ImageView imageView = (ImageView) scene.lookup("#weatherImage"+ columnNumber + i);
-                iconLocation = iconResolver.getIconForWeather(weatherDataManager.getWeatherForDay(columnNumber - 1,
-                        i-1));
-                imageView.setImage(new Image(new FileInputStream(iconLocation)));
+                try {
+
+                    ImageView imageView = (ImageView) scene.lookup("#weatherImage" + columnNumber + i);
+                    iconLocation = iconResolver.getIconForWeather(weatherDataManager.getWeatherForDay(columnNumber - 1,
+                            i - 1));
+                    imageView.setImage(new Image(new FileInputStream(iconLocation)));
+
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
 
                 Label label = (Label) scene.lookup("#day" + columnNumber + i);
                 label.setText(weatherDataManager.getWeatherCondition(columnNumber - 1,i-1).getDateAsString());
