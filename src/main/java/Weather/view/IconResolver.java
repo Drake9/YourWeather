@@ -2,7 +2,7 @@ package Weather.view;
 
 public class IconResolver {
 
-    public String getIconForWeather(String weatherName){
+    public String getIconForWeather(String weatherName) {
         String lowerCaseWeatherName = weatherName.toLowerCase();
 
         if(lowerCaseWeatherName.contains("clear")){

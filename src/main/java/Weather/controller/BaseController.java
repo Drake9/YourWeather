@@ -9,13 +9,13 @@ public abstract class BaseController {
     protected ViewFactory viewFactory;
     private String fxmlName;
 
-    public BaseController(WeatherDataManager weatherDataManager,ViewFactory viewFactory, String fxmlName) {
+    public BaseController(WeatherDataManager weatherDataManager, ViewFactory viewFactory, String fxmlName) {
         this.weatherDataManager = weatherDataManager;
         this.viewFactory = viewFactory;
         this.fxmlName = fxmlName;
     }
 
-    public String getFxmlName(){
+    public String getFxmlName() {
         return fxmlName;
     }
 }

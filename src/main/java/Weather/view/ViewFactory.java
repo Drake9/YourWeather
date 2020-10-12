@@ -14,17 +14,17 @@ public class ViewFactory {
     private WeatherDataManager weatherDataManager;
     private String cssFileName = "/css/themeDark.css";
 
-    public ViewFactory(WeatherDataManager weatherDataManager){
+    public ViewFactory(WeatherDataManager weatherDataManager) {
         this.weatherDataManager = weatherDataManager;
     }
 
     public void showMainWindow(boolean placesAreSet){
 
-        MainWindowController controller = new MainWindowController(weatherDataManager,this, "/view/MainWindow.fxml");
+        MainWindowController controller = new MainWindowController(weatherDataManager, this, "/view/MainWindow.fxml");
         initializeStage(controller);
 
         controller.clearView();
-        if(placesAreSet) {
+        if (placesAreSet) {
             controller.loadWeatherData();
         }
 
