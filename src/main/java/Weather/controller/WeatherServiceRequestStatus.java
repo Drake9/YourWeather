@@ -1,6 +1,7 @@
 package Weather.controller;
 
-public enum WeatherServiceResult {
+public enum WeatherServiceRequestStatus {
+    PENDING,
     SUCCESS,
     FAILED_BY_DATA,
     FAILED_BY_NETWORK,

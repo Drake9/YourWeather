@@ -278,8 +278,10 @@ public class MainWindowController extends BaseController implements Initializabl
         weatherService.setOnSucceeded(event -> {
 
             WeatherServiceResult weatherServiceResult = weatherService.getValue();
+            WeatherForecast weatherForecast = weatherServiceResult.getWeatherForecast();
+            WeatherServiceRequestStatus weatherServiceRequestStatus = weatherServiceResult.getWeatherServiceRequestStatus();
 
-            switch (weatherServiceResult) {
+            switch (weatherServiceRequestStatus) {
                 case SUCCESS:
                     showColumnWeatherData(columnNumber);
                     break;
@@ -344,19 +346,19 @@ public class MainWindowController extends BaseController implements Initializabl
             imageView = (ImageView) scene.lookup("#weatherImage2" + i);
             imageView.setImage(null);
 
-            Label label = (Label) scene.lookup("#day1" + i);
-            label.setText("");
-            label = (Label) scene.lookup("#temperature1" + i);
-            label.setText("");
-            label = (Label) scene.lookup("#weather1" + i);
-            label.setText("");
-
-            label = (Label) scene.lookup("#day2" + i);
-            label.setText("");
-            label = (Label) scene.lookup("#temperature2" + i);
-            label.setText("");
-            label = (Label) scene.lookup("#weather2" + i);
-            label.setText("");
+            clearLabel(scene, "#day1" + i);
+            clearLabel(scene, "#temperature1" + i);
+            clearLabel(scene, "#weather1" + i);
+            clearLabel(scene, "#day2" + i);
+            clearLabel(scene, "#temperature2" + i);
+            clearLabel(scene, "#weather2" + i);
         }
+    }
+
+    private void clearLabel(Scene scene, String id) {
+
+        Label label;
+        label = (Label) scene.lookup(id);
+        label.setText("");
     }
 }

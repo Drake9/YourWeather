@@ -3,6 +3,7 @@ package Weather.controller.services;
 import Weather.controller.WeatherServiceResult;
 import Weather.model.WeatherCondition;
 import Weather.model.WeatherForecast;
+import Weather.model.WeatherServiceResult;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import org.apache.http.HttpEntity;
@@ -56,7 +57,7 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
                     return WeatherServiceResult.FAILED_BY_UNEXPECTED_ERROR;
                 }
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return WeatherServiceResult.FAILED_BY_UNEXPECTED_ERROR;
         }  finally {
@@ -68,7 +69,7 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
                 "&exclude=current,minutely,hourly&appid=9b707f5fe12657b09e26eb6478eebf70";
         System.out.println("Starting request: " + address2);
 
-        httpget = new HttpGet(address2);
+        httpget = new HttpGet(address2.toString());
         response = httpclient.execute(httpget);
 
         //second request being made
@@ -86,8 +87,9 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
 
                 weatherForecast.setWeatherConditions(weatherConditions);
                 weatherForecast.printWeatherConditions();
+                weatherServiceResult.setWeatherForecast(weatherForecast);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return WeatherServiceResult.FAILED_BY_UNEXPECTED_ERROR;
         }  finally {

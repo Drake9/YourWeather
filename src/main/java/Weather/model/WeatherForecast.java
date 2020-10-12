@@ -1,29 +1,29 @@
 package Weather.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class WeatherForecast {
 
     private Place place;
-    private ArrayList<WeatherCondition> weatherConditions;
+    private List<WeatherCondition> weatherConditions;
 
-    public WeatherForecast(Place place){
+    public WeatherForecast(Place place) {
         this.place = place;
     }
 
-    public String getCountry(){
+    public String getCountry() {
         return this.place.getCountry();
     }
 
-    public String getCity(){
+    public String getCity() {
         return this.place.getCity();
     }
 
-    public void setCountry(String country){
+    public void setCountry(String country) {
         this.place.setCountry(country);
     }
 
-    public void setCity(String city){
+    public void setCity(String city) {
         this.place.setCity(city);
     }
 
@@ -35,7 +35,7 @@ public class WeatherForecast {
         return this.place;
     }
 
-    public void setWeatherConditions(ArrayList<WeatherCondition> weatherConditions) {
+    public void setWeatherConditions(List<WeatherCondition> weatherConditions) {
         this.weatherConditions = weatherConditions;
     }
 

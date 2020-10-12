@@ -48,7 +48,7 @@ public class WeatherDataManager {
         return weatherForecasts.get(placeNumber).getWeatherCondition(dayNumber);
     }
 
-    public WeatherForecast getWeatherForecast(int placeNumber){
+    public WeatherForecast getWeatherForecast(int placeNumber) {
         return weatherForecasts.get(placeNumber);
     }
 
