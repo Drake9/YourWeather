@@ -3,19 +3,16 @@ package Weather;
 import Weather.model.Place;
 import Weather.model.WeatherCondition;
 import Weather.model.WeatherForecast;
-import Weather.view.IconResolver;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WeatherDataManager {
 
-    private IconResolver iconResolver;
     private ArrayList<WeatherForecast> weatherForecasts;
 
     public WeatherDataManager() {
-        iconResolver = new IconResolver();
-        weatherForecasts = new ArrayList<WeatherForecast>();
+        weatherForecasts = new ArrayList<>();
     }
 
     public void setPlaces(List<Place> places){
@@ -40,6 +37,10 @@ public class WeatherDataManager {
         this.weatherForecasts.get(placeNumber).setCountry(country);
     }
 
+    public Place getPlace(int placeNumber) {
+        return weatherForecasts.get(placeNumber).getPlace();
+    }
+
     public String getWeatherForDay(int placeNumber, int dayNumber){
         return weatherForecasts.get(placeNumber).getWeatherCondition(dayNumber).getWeatherMain();
     }
@@ -48,8 +49,8 @@ public class WeatherDataManager {
         return weatherForecasts.get(placeNumber).getWeatherCondition(dayNumber);
     }
 
-    public WeatherForecast getWeatherForecast(int placeNumber) {
-        return weatherForecasts.get(placeNumber);
+    public void setWeatherForecast(int placeNumber, WeatherForecast weatherForecast) {
+        weatherForecasts.set(placeNumber, weatherForecast);
     }
 
     public ArrayList<WeatherForecast> getWeatherForecasts(){

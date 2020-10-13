@@ -1,6 +1,7 @@
 package Weather.controller.services;
 
-import Weather.controller.WeatherServiceResult;
+import Weather.controller.WeatherServiceRequestStatus;
+import Weather.model.Place;
 import Weather.model.WeatherCondition;
 import Weather.model.WeatherForecast;
 import Weather.model.WeatherServiceResult;
@@ -16,27 +17,34 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OpenWeatherMapService extends Service<WeatherServiceResult> {
 
-    private static final String API_KEY = "9b707f5fe12657b09e26eb6478eebf70";
-    private WeatherForecast weatherForecast;
-    private Double latitude;
-    private Double longitude;
-    private Integer responseCode;
+    final private Place place;
+    private CloseableHttpClient httpclient;
 
-    public OpenWeatherMapService(WeatherForecast weatherForecast) {
-        this.weatherForecast = weatherForecast;
+    public OpenWeatherMapService(Place place) {
+        this.place = place;
+        httpclient = HttpClients.createDefault();
     }
 
     public WeatherServiceResult getData() throws Exception {
-        String address1 =
-                "http://api.openweathermap.org/data/2.5/weather?q="+weatherForecast.getCity()+","+weatherForecast.getCountry()+
-                        "&appid="+API_KEY;
+
+        WeatherForecast weatherForecast = new WeatherForecast(place);
+        WeatherServiceResult weatherServiceResult = new WeatherServiceResult(weatherForecast,
+                WeatherServiceRequestStatus.PENDING);
+        Double longitude = 0.0;
+        Double latitude = 0.0;
+
+        StringBuilder address1 = new StringBuilder();
+        address1.append("http://api.openweathermap.org/data/2.5/weather?q=")
+                .append(place.getCity())
+                .append("," + place.getCountry())
+                .append("&appid=" + ApiKey.getApiKey());
         System.out.println("Starting request: " + address1);
 
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpGet httpget = new HttpGet(address1);
+        HttpGet httpget = new HttpGet(address1.toString());
         CloseableHttpResponse response = httpclient.execute(httpget);
 
         //get coordinates for second request
@@ -46,27 +54,35 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
                 String data = EntityUtils.toString(entity);
 
                 JSONObject json = new JSONObject(data);
-                getResponseCode(json);
+                Integer responseCode = getResponseCode(json);
 
-                if(responseCode == 404){
-                    return WeatherServiceResult.FAILED_BY_DATA;
-                } else if (responseCode == 200){
-                    getCoordinates(json);
+                if (responseCode == 404) {
+                    weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_DATA);
+                    return weatherServiceResult;
+                } else if (responseCode == 200) {
+                    JSONObject coordinates = json.getJSONObject("coord");
+                    longitude = getLongitude(coordinates);
+                    latitude = getLatitude(coordinates);
                     System.out.println(weatherForecast.getCity() + " " + longitude.toString() + " " + latitude.toString());
                 } else {
-                    return WeatherServiceResult.FAILED_BY_UNEXPECTED_ERROR;
+                    weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_UNEXPECTED_ERROR);
+                    return weatherServiceResult;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return WeatherServiceResult.FAILED_BY_UNEXPECTED_ERROR;
-        }  finally {
+            weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_UNEXPECTED_ERROR);
+            return weatherServiceResult;
+        } finally {
             response.close();
         }
 
-        String address2 =
-                "https://api.openweathermap.org/data/2.5/onecall?lat="+latitude.toString()+"&lon="+longitude.toString()+
-                "&exclude=current,minutely,hourly&appid=9b707f5fe12657b09e26eb6478eebf70";
+        StringBuilder address2 = new StringBuilder();
+        address2.append("https://api.openweathermap.org/data/2.5/onecall?lat=")
+                .append(latitude.toString())
+                .append("&lon=" + longitude.toString())
+                .append("&exclude=current,minutely,hourly&units=metric&appid=")
+                .append(ApiKey.getApiKey());
         System.out.println("Starting request: " + address2);
 
         httpget = new HttpGet(address2.toString());
@@ -80,8 +96,8 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
                 JSONObject jsonObject = new JSONObject(data);
                 JSONArray days = jsonObject.getJSONArray("daily");
 
-                ArrayList<WeatherCondition> weatherConditions = new ArrayList<WeatherCondition>();
-                for(int i=0; i<days.length(); i++){
+                List<WeatherCondition> weatherConditions = new ArrayList<>();
+                for (int i = 0; i < days.length(); i++) {
                     weatherConditions.add(new WeatherCondition(days.getJSONObject(i)));
                 }
 
@@ -91,17 +107,19 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return WeatherServiceResult.FAILED_BY_UNEXPECTED_ERROR;
-        }  finally {
+            weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_UNEXPECTED_ERROR);
+            return weatherServiceResult;
+        } finally {
             response.close();
         }
 
-        return WeatherServiceResult.SUCCESS;
+        weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.SUCCESS);
+        return weatherServiceResult;
     }
 
     @Override
     protected Task<WeatherServiceResult> createTask() {
-        return new Task<WeatherServiceResult>() {
+        return new Task<>() {
             @Override
             protected WeatherServiceResult call() throws Exception {
                 return getData();
@@ -109,24 +127,27 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
         };
     }
 
-    private void getCoordinates(JSONObject json){
-
-        JSONObject coordinates= json.getJSONObject("coord");
-        this.longitude = (Double) coordinates.get("lon");
-        this.latitude = (Double) coordinates.get("lat");
-        this.weatherForecast.setCity( (String) json.get("name"));
+    private Double getLongitude(JSONObject coordinates) {
+        return coordinates.getDouble("lon");
     }
 
-    private void getResponseCode(JSONObject json){
+    private Double getLatitude(JSONObject coordinates) {
+        return coordinates.getDouble("lat");
+    }
 
-        Object object = json.get("cod");
+    private Integer getResponseCode(JSONObject json) {
 
-        if(object instanceof String){
-            responseCode = Integer.parseInt((String)object);
-        }else if (object instanceof Integer){
-            responseCode = (Integer) object;
+        Object responseCode = json.get("cod");
+
+        //ensuring that response code will be Integer
+        //because API sometimes uses String
+
+        if (responseCode instanceof String) {
+            return Integer.parseInt((String) responseCode);
+        } else if (responseCode instanceof Integer) {
+            return (Integer) responseCode;
         } else {
-            responseCode = 909;
+            return 0;
         }
     }
 }

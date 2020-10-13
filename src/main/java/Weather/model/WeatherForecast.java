@@ -27,10 +27,6 @@ public class WeatherForecast {
         this.place.setCity(city);
     }
 
-    public void setPlace(Place place){
-        this.place = place;
-    }
-
     public Place getPlace(){
         return this.place;
     }
