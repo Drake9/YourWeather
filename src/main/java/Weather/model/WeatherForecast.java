@@ -42,9 +42,14 @@ public class WeatherForecast {
     public void printWeatherConditions(){
 
         for(int i = 0; i < weatherConditions.size(); i++) {
-            System.out.println("<<Day "+i+" "+weatherConditions.get(i).getDateAsString()+" >> temp: "+weatherConditions.get(i).getTemperature()+
-                    "\u00B0"+"C weather: "+weatherConditions.get(i).getWeatherMain()+" "+weatherConditions.get(i).getWeatherDescription());
 
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("<<Day " + i + " "+weatherConditions.get(i).getDateAsString() + " >> ")
+                    .append("temp: " + weatherConditions.get(i).getTemperature() + "\u00B0"+"C" )
+                    .append("weather: " + weatherConditions.get(i).getWeatherMain())
+                    .append(" " + weatherConditions.get(i).getWeatherDescription());
+
+            System.out.println(stringBuilder);
         }
     }
 }

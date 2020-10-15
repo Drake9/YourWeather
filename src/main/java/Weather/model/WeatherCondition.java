@@ -18,7 +18,7 @@ public class WeatherCondition {
     private final String weatherMain;
     private final String weatherDescription;
 
-    public WeatherCondition(JSONObject json) {
+    public WeatherCondition(JSONObject json) throws IllegalArgumentException{
 
         date = extractDateFromJson(json);
         temperature = extractTemperatureFromJson(json);
@@ -48,31 +48,62 @@ public class WeatherCondition {
 
     private LocalDate extractDateFromJson(JSONObject json) {
 
-        long epoch = json.getLong("dt");
-        return Instant.ofEpochSecond(epoch).atZone(ZoneId.systemDefault()).toLocalDate();
+        if (json.has("dt")) {
+            long epoch = json.getLong("dt");
+            return Instant.ofEpochSecond(epoch).atZone(ZoneId.systemDefault()).toLocalDate();
+        } else {
+            throw new IllegalArgumentException("\"dt\" keyword not found in json: " + json.toString());
+        }
     }
 
     private double extractTemperatureFromJson(JSONObject json) {
 
-        JSONObject temperatures = json.getJSONObject("temp");
-        double temperatureToTruncate = temperatures.getDouble("day");
+        if (json.has("temp")) {
+            JSONObject temperatures = json.getJSONObject("temp");
 
-        return BigDecimal.valueOf(temperatureToTruncate).setScale(1, RoundingMode.HALF_UP).doubleValue();
+            if (temperatures.has("day")) {
+                double temperatureToTruncate = temperatures.getDouble("day");
+                return BigDecimal.valueOf(temperatureToTruncate).setScale(1, RoundingMode.HALF_UP).doubleValue();
+            } else {
+                throw new IllegalArgumentException("\"day\" keyword not found in json: " + temperatures.toString());
+            }
+
+        } else {
+            throw new IllegalArgumentException("\"temp\" keyword not found in json: " + json.toString());
+        }
     }
 
     private JSONObject extractWeatherDetailsFromJson(JSONObject json) {
 
-        JSONArray weather = json.getJSONArray("weather");
-        return weather.getJSONObject(0);
+        if (json.has("weather")) {
+            JSONArray weather = json.getJSONArray("weather");
+
+            if (weather.length() != 0) {
+                return weather.getJSONObject(0);
+            } else {
+                throw new IllegalArgumentException("\"weather\" array is empty in json: " + json.toString());
+            }
+
+        } else {
+            throw new IllegalArgumentException("\"weather\" keyword not found in json: " + json.toString());
+        }
     }
 
     private String extractWeatherMainFromJson(JSONObject json) {
 
-        return json.getString("main");
+        if (json.has("main")) {
+            return json.getString("main");
+        } else {
+            throw new IllegalArgumentException("\"main\" keyword not found in json: " + json.toString());
+        }
     }
 
     private String extractWeatherDescriptionFromJson(JSONObject json) {
 
-        return json.getString("description");
+        if (json.has("description")) {
+            return json.getString("description");
+        } else {
+            throw new IllegalArgumentException("\"description\" keyword not found in json: " + json.toString());
+        }
     }
 }
