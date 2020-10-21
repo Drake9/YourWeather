@@ -17,6 +17,7 @@ public class App extends Application {
 
     private WeatherDataManager weatherDataManager = new WeatherDataManager();
     private PersistenceAccess persistenceAccess = new PersistenceAccess();
+    private ViewFactory viewFactory = new ViewFactory(weatherDataManager);
 
     public static void main(String[] args) {
         launch();
@@ -25,18 +26,16 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        ViewFactory viewFactory = new ViewFactory(weatherDataManager);
-
-        List<Place> listOfPlaces = persistenceAccess.loadFromPersistence();
+        List<Place> listOfPlaces = loadFromPersistence();
 
         if(listOfPlaces.size() > 0){
-            weatherDataManager.setPlaces(listOfPlaces);
-            viewFactory.showMainWindow(true);
+            setPlaces(listOfPlaces);
+            showMainWindow(true);
         }else{
             listOfPlaces.add(new Place("", ""));
             listOfPlaces.add(new Place("", ""));
-            weatherDataManager.setPlaces(listOfPlaces);
-            viewFactory.showMainWindow(false);
+            setPlaces(listOfPlaces);
+            showMainWindow(false);
         }
     }
 
@@ -47,6 +46,22 @@ public class App extends Application {
         for(WeatherForecast weatherForecast: weatherDataManager.getWeatherForecasts()){
             listOfPlaces.add(weatherForecast.getPlace());
         }
+        saveToPersistence(listOfPlaces);
+    }
+
+    protected List<Place> loadFromPersistence() {
+        return persistenceAccess.loadFromPersistence();
+    }
+
+    protected void saveToPersistence(List<Place> listOfPlaces) {
         persistenceAccess.saveToPersistence(listOfPlaces);
+    }
+
+    protected void setPlaces(List<Place> listOfPlaces) {
+        weatherDataManager.setPlaces(listOfPlaces);
+    }
+
+    protected void showMainWindow(Boolean placesAreSet) {
+        viewFactory.showMainWindow(placesAreSet);
     }
 }

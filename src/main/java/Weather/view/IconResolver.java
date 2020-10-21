@@ -5,20 +5,22 @@ public class IconResolver {
     public String getIconForWeather(String weatherName) {
         String lowerCaseWeatherName = weatherName.toLowerCase();
 
-        if(lowerCaseWeatherName.contains("clear")){
+        if (lowerCaseWeatherName.contains("clear")) {
             return "src/main/resources/icons/sun.png";
-        }else if(lowerCaseWeatherName.contains("clouds")){
+        } else if (lowerCaseWeatherName.contains("clouds")) {
             return "src/main/resources/icons/cloudy.png";
-        }else if(lowerCaseWeatherName.contains("thunderstorm")){
+        } else if (lowerCaseWeatherName.contains("thunderstorm")) {
             return "src/main/resources/icons/storm.png";
-        }else if(lowerCaseWeatherName.contains("drizzle")){
+        } else if (lowerCaseWeatherName.contains("drizzle")) {
             return "src/main/resources/icons/rainy.png";
-        }else if(lowerCaseWeatherName.contains("rain")){
+        } else if (lowerCaseWeatherName.contains("rain")) {
             return "src/main/resources/icons/rain.png";
-        }else if(lowerCaseWeatherName.contains("snow")){
+        } else if (lowerCaseWeatherName.contains("snow")) {
             return "src/main/resources/icons/snow.png";
-        }else{
+        } else if (lowerCaseWeatherName.contains("wind")) {
             return "src/main/resources/icons/windy.png";
+        } else {
+            return "src/main/resources/icons/cloudy.png";
         }
     }
 }
