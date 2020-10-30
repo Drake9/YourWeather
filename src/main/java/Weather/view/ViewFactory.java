@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ViewFactory {
 
     private WeatherDataManager weatherDataManager;
-    private String cssFileName = "/css/themeDark.css";
+    private final static String cssFileName = "/css/themeDark.css";
 
     public ViewFactory(WeatherDataManager weatherDataManager) {
         this.weatherDataManager = weatherDataManager;
@@ -20,7 +20,7 @@ public class ViewFactory {
 
     public void showMainWindow(boolean placesAreSet){
 
-        MainWindowController controller = new MainWindowController(weatherDataManager, this, "/view/MainWindow.fxml");
+        MainWindowController controller = createMainWindowController();
         initializeStage(controller);
 
         controller.clearView();
@@ -30,7 +30,7 @@ public class ViewFactory {
 
     }
 
-    private void initializeStage(BaseController controller){
+    protected void initializeStage(BaseController controller){
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controller.getFxmlName()));
         fxmlLoader.setController(controller);
@@ -55,5 +55,9 @@ public class ViewFactory {
 
     public void closeStage(Stage stage){
         stage.close();
+    }
+
+    protected MainWindowController createMainWindowController() {
+        return new MainWindowController(weatherDataManager, this, "/view/MainWindow.fxml");
     }
 }

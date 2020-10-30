@@ -15,8 +15,8 @@ public class WeatherDataManager {
         weatherForecasts = new ArrayList<>();
     }
 
-    public void setPlaces(List<Place> places){
-        for(Place place:places){
+    public void setPlaces(List<Place> places) {
+        for (Place place : places) {
             weatherForecasts.add(new WeatherForecast(place));
         }
     }
@@ -41,11 +41,11 @@ public class WeatherDataManager {
         return weatherForecasts.get(placeNumber).getPlace();
     }
 
-    public String getWeatherForDay(int placeNumber, int dayNumber){
+    public String getWeatherForDay(int placeNumber, int dayNumber) {
         return weatherForecasts.get(placeNumber).getWeatherCondition(dayNumber).getWeatherMain();
     }
 
-    public WeatherCondition getWeatherCondition(int placeNumber, int dayNumber){
+    public WeatherCondition getWeatherCondition(int placeNumber, int dayNumber) {
         return weatherForecasts.get(placeNumber).getWeatherCondition(dayNumber);
     }
 
@@ -53,7 +53,7 @@ public class WeatherDataManager {
         weatherForecasts.set(placeNumber, weatherForecast);
     }
 
-    public ArrayList<WeatherForecast> getWeatherForecasts(){
+    public ArrayList<WeatherForecast> getWeatherForecasts() {
         return this.weatherForecasts;
     }
 }

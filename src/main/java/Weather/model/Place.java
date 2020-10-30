@@ -38,7 +38,11 @@ public class Place {
     }
 
     public void setLongitude(Double longitude) {
-        this.longitude = longitude;
+        if (longitude >= -180 && longitude <= 180) {
+            this.longitude = longitude;
+        } else {
+            throw new IllegalArgumentException("Longitude must be between -180 and 180, was: " + longitude);
+        }
     }
 
     public Double getLatitude() {
@@ -46,7 +50,11 @@ public class Place {
     }
 
     public void setLatitude(Double latitude) {
-        this.latitude = latitude;
+        if (latitude >= -90 && latitude <= 90) {
+            this.latitude = latitude;
+        } else {
+            throw new IllegalArgumentException("Latitude must be between -90 and 190, was: " + latitude);
+        }
     }
 
     @Override
@@ -55,11 +63,13 @@ public class Place {
         if (o == null || getClass() != o.getClass()) return false;
         Place place = (Place) o;
         return Objects.equals(country, place.country) &&
-                Objects.equals(city, place.city);
+                Objects.equals(city, place.city) &&
+                Objects.equals(longitude, place.longitude) &&
+                Objects.equals(latitude, place.latitude);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(country, city);
+        return Objects.hash(country, city, longitude, latitude);
     }
 }

@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.Objects;
 
 public class WeatherCondition {
 
@@ -105,5 +106,21 @@ public class WeatherCondition {
         } else {
             throw new IllegalArgumentException("\"description\" keyword not found in json: " + json.toString());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WeatherCondition that = (WeatherCondition) o;
+        return Objects.equals(date, that.date) &&
+                Objects.equals(temperature, that.temperature) &&
+                Objects.equals(weatherMain, that.weatherMain) &&
+                Objects.equals(weatherDescription, that.weatherDescription);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, temperature, weatherMain, weatherDescription);
     }
 }

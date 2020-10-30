@@ -16,7 +16,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,11 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
 
     final private Place place;
     private CloseableHttpClient httpclient;
+
+    public OpenWeatherMapService(){
+        this.place = new Place();
+        httpclient = HttpClients.createDefault();
+    }
 
     public OpenWeatherMapService(Place place) {
         this.place = place;
@@ -45,7 +49,15 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
 
         //get data from response
         try {
-            weatherServiceResult = getPlaceCoordinatesFromResponse(weatherServiceResult, response);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                String data = EntityUtils.toString(entity);
+                JSONObject json = new JSONObject(data);
+                weatherServiceResult = getPlaceCoordinatesFromJsonResponse(weatherServiceResult, json);
+            } else {
+                weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_UNEXPECTED_ERROR);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_UNEXPECTED_ERROR);
@@ -67,7 +79,15 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
 
         //get data from response
         try {
-            weatherServiceResult = getWeatherDataFromResponse(weatherServiceResult, response);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                String data = EntityUtils.toString(entity);
+                JSONObject jsonObject = new JSONObject(data);
+                weatherServiceResult = getWeatherDataFromJsonResponse(weatherServiceResult, jsonObject);
+            } else {
+                weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_UNEXPECTED_ERROR);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_UNEXPECTED_ERROR);
@@ -111,31 +131,25 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
                 .append("&lon=" + longitude.toString())
                 .append("&exclude=current,minutely,hourly&units=metric&appid=")
                 .append(ApiKey.getApiKey());
+
         return address.toString();
     }
 
-    protected WeatherServiceResult getPlaceCoordinatesFromResponse(WeatherServiceResult weatherServiceResult,
-                                                              CloseableHttpResponse response) throws IOException {
+    protected WeatherServiceResult getPlaceCoordinatesFromJsonResponse(WeatherServiceResult weatherServiceResult,
+                                                               JSONObject json) {
 
-        HttpEntity entity = response.getEntity();
+        Integer responseCode = getResponseCode(json);
 
-        if (entity != null) {
-            String data = EntityUtils.toString(entity);
+        if (responseCode == 200) {
+            JSONObject coordinates = json.getJSONObject("coord");
 
-            JSONObject json = new JSONObject(data);
-            Integer responseCode = getResponseCode(json);
+            Place place = weatherServiceResult.getWeatherForecast().getPlace();
+            place.setLongitude(coordinates.getDouble("lon"));
+            place.setLatitude(coordinates.getDouble("lat"));
 
-            if (responseCode == 200) {
-                Place place = weatherServiceResult.getWeatherForecast().getPlace();
-                JSONObject coordinates = json.getJSONObject("coord");
-                place.setLongitude(getLongitude(coordinates));
-                place.setLatitude(getLatitude(coordinates));
-                System.out.println(place.getCity() + " " + place.getLongitude().toString() + " " + place.getLatitude().toString());
-            } else if (responseCode == 404) {
-                weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_DATA);
-            } else {
-                weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_UNEXPECTED_ERROR);
-            }
+            System.out.println(place.getCity() + " " + place.getLongitude().toString() + " " + place.getLatitude().toString());
+        } else if (responseCode == 404) {
+            weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_DATA);
         } else {
             weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_UNEXPECTED_ERROR);
         }
@@ -143,48 +157,38 @@ public class OpenWeatherMapService extends Service<WeatherServiceResult> {
         return weatherServiceResult;
     }
 
-    protected WeatherServiceResult getWeatherDataFromResponse(WeatherServiceResult weatherServiceResult,
-                                                              CloseableHttpResponse response) throws IOException {
-        HttpEntity entity = response.getEntity();
-        if (entity != null) {
-            String data = EntityUtils.toString(entity);
-            JSONObject jsonObject = new JSONObject(data);
-            JSONArray days = jsonObject.getJSONArray("daily");
+    protected WeatherServiceResult getWeatherDataFromJsonResponse(WeatherServiceResult weatherServiceResult,
+                                                              JSONObject jsonObject) {
 
-            List<WeatherCondition> weatherConditions = new ArrayList<>();
-            for (int i = 0; i < days.length(); i++) {
-                weatherConditions.add(new WeatherCondition(days.getJSONObject(i)));
-            }
+        JSONArray days = jsonObject.getJSONArray("daily");
 
-            WeatherForecast weatherForecast = weatherServiceResult.getWeatherForecast();
-            weatherForecast.setWeatherConditions(weatherConditions);
-            weatherForecast.printWeatherConditions();
-        } else {
-            weatherServiceResult.setWeatherServiceRequestStatus(WeatherServiceRequestStatus.FAILED_BY_UNEXPECTED_ERROR);
+        List<WeatherCondition> weatherConditions = new ArrayList<>();
+        for (int i = 0; i < days.length(); i++) {
+            weatherConditions.add(new WeatherCondition(days.getJSONObject(i)));
         }
 
+        WeatherForecast weatherForecast = weatherServiceResult.getWeatherForecast();
+        weatherForecast.setWeatherConditions(weatherConditions);
+        weatherForecast.printWeatherConditions();
+
         return weatherServiceResult;
-    }
-
-    protected Double getLongitude(JSONObject coordinates) {
-        return coordinates.getDouble("lon");
-    }
-
-    protected Double getLatitude(JSONObject coordinates) {
-        return coordinates.getDouble("lat");
     }
 
     protected Integer getResponseCode(JSONObject json) {
 
-        Object responseCode = json.get("cod");
+        if(json.has("cod")) {
+            Object responseCode = json.get("cod");
 
-        //ensuring that response code will be Integer
-        //because API sometimes uses String
+            //ensuring that response code will be Integer
+            //because API sometimes uses String
 
-        if (responseCode instanceof String) {
-            return Integer.parseInt((String) responseCode);
-        } else if (responseCode instanceof Integer) {
-            return (Integer) responseCode;
+            if (responseCode instanceof String) {
+                return Integer.parseInt((String) responseCode);
+            } else if (responseCode instanceof Integer) {
+                return (Integer) responseCode;
+            } else {
+                return 0;
+            }
         } else {
             return 0;
         }

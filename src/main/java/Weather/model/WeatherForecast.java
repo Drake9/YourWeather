@@ -44,7 +44,7 @@ public class WeatherForecast {
         for(int i = 0; i < weatherConditions.size(); i++) {
 
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("<<Day " + i + " "+weatherConditions.get(i).getDateAsString() + " >> ")
+            stringBuilder.append("<< Day " + i + " "+weatherConditions.get(i).getDateAsString() + " >> ")
                     .append("temp: " + weatherConditions.get(i).getTemperature() + "\u00B0"+"C " )
                     .append("weather: " + weatherConditions.get(i).getWeatherMain())
                     .append(" " + weatherConditions.get(i).getWeatherDescription());
