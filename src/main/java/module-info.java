@@ -8,5 +8,10 @@ module Weather {
     requires com.fasterxml.jackson.databind;
     exports Weather;
     exports Weather.model;
+    opens Weather;
+    opens Weather.model;
+    opens Weather.view;
     opens Weather.controller;
+    opens Weather.controller.services;
+    opens Weather.controller.persistence;
 }
