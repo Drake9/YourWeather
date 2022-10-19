@@ -8,7 +8,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <jackson.version.core>2.11.3</jackson.version.core>
+        <jackson.version.core>2.13.4.1</jackson.version.core>
         <junit.version>5.7.0-RC1</junit.version>
     </properties>
     <dependencies>
